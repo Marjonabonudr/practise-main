@@ -1,0 +1,88 @@
+.main-sidebar {
+    width: 260px;
+    background-color: #1f2937; /* To'q kulrang professional rang */
+    color: #ffffff;
+    min-height: calc(100vh - 64px); /* Headerdan qolgan butun ekranni egallaydi */
+    padding: 1.5rem 0;
+    box-sizing: border-box;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.menu-item {
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #d1d5db; /* Qisman och rangli matn */
+    transition: all 0.2s ease-in-out;
+    border-left: 4px solid transparent;
+}
+
+.menu-item:hover {
+    background-color: #374151;
+    color: #ffffff;
+}
+
+.menu-item.active {
+    background-color: #111827; /* Faol menyu uchun to'qroq rang */
+    color: #3b82f6; /* Algoritm ko'k rangi */
+    font-weight: 600;
+    border-left-color: #3b82f6; /* TZ bo'yicha chap tomondagi faol chiziq */
+}
+
+.menu-icon {
+    font-size: 1.2rem;
+}
+
+.menu-text {
+    letter-spacing: 0.025em;
+}
+
+
+/* 📑 Planshet va noutbuklar uchrashish nuqtasi (1024px gacha) */
+@media (max-width: 1024px) {
+  .main-sidebar {
+    width: 200px;
+  }
+  .sidebar-menu li {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* 💻 Mobil va Planshetlar uchun (768px gacha) - Sidebarni gorizontal qilish */
+@media (max-width: 768px) {
+  .main-sidebar {
+    width: 100%;
+    min-height: auto;
+    padding: 0.5rem 0;
+  }
+  .sidebar-menu {
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 0;
+  }
+  .menu-item {
+    padding: 0.5rem;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-size: 0.75rem;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+  }
+  .menu-item.active {
+    border-left-color: transparent;
+    border-bottom-color: #3b82f6; /* Faol chiziq endi pastda bo'ladi */
+  }
+}

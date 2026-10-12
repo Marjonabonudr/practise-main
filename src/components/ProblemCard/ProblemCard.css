@@ -1,0 +1,63 @@
+.problem-card-box {
+    background: #ffffff;
+    padding: 1.25rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+    border-left: 4px solid #d1d5db;
+    transition: transform 0.2s ease;
+}
+
+.problem-card-box:hover {
+    transform: translateY(-2px);
+}
+
+/* TZ: Ochiq / Jarayonda / Hal qilindi holatlari uchun ranglar */
+.problem-card-box.open { border-left-color: #ef4444; }
+.problem-card-box.progress { border-left-color: #f59e0b; }
+.problem-card-box.resolved { border-left-color: #10b981; }
+
+.problem-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.problem-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.status-badge-card {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.status-badge-card.open { background-color: #fee2e2; color: #991b1b; }
+.status-badge-card.progress { background-color: #fef3c7; color: #92400e; }
+.status-badge-card.resolved { background-color: #d1fae5; color: #065f46; }
+
+.problem-desc {
+    margin: 0 0 1rem 0;
+    font-size: 0.875rem;
+    color: #4b5563;
+    line-height: 1.4;
+}
+
+.problem-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #6b7280;
+    border-top: 1px solid #f3f4f6;
+    padding-top: 0.75rem;
+}
+
+.problem-meta {
+    font-weight: 500;
+}

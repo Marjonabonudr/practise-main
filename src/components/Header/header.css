@@ -1,0 +1,40 @@
+.main-header {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.header-logo {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+.logout-btn {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.logout-btn:hover {
+    background-color: #dc2626;
+}
+
+
+/* 💻 Kichik ekranlar va Planshetlar uchun (768px gacha) */
+@media (max-width: 768px) {
+  .main-header {
+    padding: 0.75rem 1rem;
+  }
+  .header-logo {
+    font-size: 1rem;
+  }
+  .logout-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}

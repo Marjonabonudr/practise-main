@@ -1,0 +1,64 @@
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f4f6;
+}
+.login-form {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+.login-form h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #1f2937;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4b5563;
+}
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+.login-btn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #1d4ed8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.login-btn:hover {
+    background-color: #1e40af;
+}
+
+
+/* 📱 Mobil telefonlar uchun (480px gacha) */
+@media (max-width: 480px) {
+  .login-form {
+    padding: 1.5rem;
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
+  .login-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
