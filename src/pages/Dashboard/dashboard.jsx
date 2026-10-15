@@ -5,7 +5,8 @@ import Sidebar from '../../components/Sidebar/sidebar';
 import ProblemCard from '../../components/ProblemCard/ProblemCard';
 import './dashboard.css';
 
-const API = 'https://onrender.com';
+const API = 'https://practise-back.onrender.com/api';
+
 
 
 // Backend xatosini o'qiladigan matnga aylantiradi (obyekt alert'da [object Object] bo'lib qolmasin)
