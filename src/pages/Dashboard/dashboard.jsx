@@ -57,6 +57,7 @@ const Dashboard = () => {
   const [companyForm, setCompanyForm] = useState(emptyCompany);
 
   const [companiesList, setCompaniesList] = useState([]); // Baza uchun jonli ro'yxat
+  const [studentsList, setStudentsList] = useState([]); // Baza uchun jonli ro'yxat
 
 
   const token = localStorage.getItem('token');
@@ -115,6 +116,45 @@ const Dashboard = () => {
       }
     }
   }
+
+
+    // 👥 1. Talabalarni bazadan yuklash funksiyasi
+  const fetchStudents = async () => {
+      try {
+          const res = await axios.get('http://localhost:3000/api/students', { headers });
+          setStudentsList(res.data || []);
+      } catch (err) {
+          console.error("Talabalarni yuklashda xatolik:", err);
+      }
+  };
+
+  // 🗑️ 2. Talabani o'chirish logikasi
+  const handleStudentDelete = async (id) => {
+      if (window.confirm("Ushbu o‘quvchi profilini o‘chirishni tasdiqlaysizmi?")) {
+          try {
+              await axios.delete(`http://localhost:3000/api/students/${id}`, { headers });
+              alert("O‘quvchi muvaffaqiyatli o‘chirildi!");
+              fetchStudents(); // Ro'yxatni yangilash
+              fetchDashboardData();
+          } catch (err) {
+              alert("O‘chirishda xatolik: " + (err.response?.data || err.message));
+          }
+      }
+  };
+
+  // Sahifa yuklanganda va tab o'zgarganda ishga tushishi uchun useEffect-ni ham yangilab qo'ying:
+  useEffect(() => {
+      if (token) {
+          fetchDashboardData();
+          fetchCompanies();
+          fetchStudents();
+      }
+  }, [token]);
+
+  useEffect(() => {
+      if (activeTab === 'students') fetchStudents();
+  }, [activeTab]);
+
 
   useEffect(() => {
     if (token) {
@@ -264,33 +304,48 @@ const Dashboard = () => {
 
           {/* BANNER 2: O'QUVCHILAR */}
           {activeTab === 'students' && (
-            <div className="table-wrapper-section">
-              <h3>👥 O‘quvchilarni Boshqarish</h3>
-              <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-                Bu bo‘lim orqali yangi amaliyotchi o‘quvchilar profili yaratiladi.
-              </p>
-              <button className="csv-export-button" style={{ backgroundColor: '#2563eb' }} onClick={() => setIsStudentModalOpen(true)}>
-                + Yangi O‘quvchi Qo‘shish
-              </button>
-              <table className="dashboard-main-table" style={{ marginTop: '1rem' }}>
-                <thead>
-                  <tr><th>F.I.Sh.</th><th>Yo‘nalish</th><th>Guruh</th><th>Telefon</th><th>Akkaunt</th></tr>
-                </thead>
-                <tbody>
-                  {students.length === 0 ? (
-                    <tr><td colSpan="5" className="empty-row-msg">O‘quvchilar hali qo‘shilmagan.</td></tr>
-                  ) : (
-                    students.map((s) => (
-                      <tr key={s.id}>
-                        <td>{s.full_name}</td><td>{s.direction}</td><td>{s.group_name || '—'}</td>
-                        <td>{s.phone || '—'}</td><td>{s.account_status}</td>
-                      </tr>
+    <div className="table-wrapper-section">
+        <div className="section-title-bar">
+            <h3>👥 O‘quvchilarni Boshqarish paneli</h3>
+            <button className="csv-export-button" style={{backgroundColor: '#2563eb'}} onClick={() => setIsStudentModalOpen(true)}>+ Yangi O‘quvchi Qo‘shish</button>
+        </div>
+        
+        {/* Talabalar uchun dinamik real jadval ro'yxati */}
+        <table className="dashboard-main-table" style={{marginTop: '1.5rem'}}>
+            <thead>
+                <tr>
+                    <th>O‘quvchi F.I.Sh.</th>
+                    <th>Telefon raqami</th>
+                    <th>Yo‘nalishi</th>
+                    <th>Guruh kodi</th>
+                    <th style={{textAlign: 'center'}}>Amal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {studentsList.length === 0 ? (
+                    <tr><td colSpan="5" className="empty-row-msg">Tizimda hali biror amaliyotchi o‘quvchi mavjud emas.</td></tr>
+                ) : (
+                    studentsList.map((stud) => (
+                        <tr key={stud.id}>
+                            <td><strong>{stud.fullName}</strong></td>
+                            <td>{stud.phone}</td>
+                            <td>{stud.field}</td>
+                            <td>{stud.group}</td>
+                            <td style={{textAlign: 'center'}}>
+                                <button 
+                                    onClick={() => handleStudentDelete(stud.id)}
+                                    style={{backgroundColor: '#ef4444', color: 'white', border: 'none', padding: '0.35rem 0.75rem', borderRadius: '4px', cursor: 'pointer', fontWeight: '600', fontSize: '0.8rem'}}
+                                >
+                                    O‘chirish
+                                </button>
+                            </td>
+                        </tr>
                     ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-          )}
+                )}
+            </tbody>
+        </table>
+    </div>
+)}
 
           {/* BANNER 3: KOMPANIYALAR */}
           {activeTab === 'companies' && (
