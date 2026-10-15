@@ -5,7 +5,8 @@ import Sidebar from '../../components/Sidebar/sidebar';
 import ProblemCard from '../../components/ProblemCard/ProblemCard';
 import './dashboard.css';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API = 'https://onrender.com';
+
 
 // Backend xatosini o'qiladigan matnga aylantiradi (obyekt alert'da [object Object] bo'lib qolmasin)
 const errMsg = (err) => {
