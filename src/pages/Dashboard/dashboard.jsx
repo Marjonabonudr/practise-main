@@ -56,6 +56,9 @@ const Dashboard = () => {
   const [studentForm, setStudentForm] = useState(emptyStudent);
   const [companyForm, setCompanyForm] = useState(emptyCompany);
 
+  const [companiesList, setCompaniesList] = useState([]); // Baza uchun jonli ro'yxat
+
+
   const token = localStorage.getItem('token');
   const headers = { Authorization: `Bearer ${token}` };
 
@@ -78,6 +81,7 @@ const Dashboard = () => {
       axios.get(`${API}/students`, { headers, params: { limit: 50 } }),
       axios.get(`${API}/companies`, { headers, params: { limit: 50 } }),
     ]); 
+
     const [s, t, a, st, c] = calls;
     if (s.status === 'fulfilled') setStats(s.value.data.data || {});
     if (t.status === 'fulfilled') setTableData(t.value.data.data || []);
@@ -87,9 +91,42 @@ const Dashboard = () => {
 
     const failed = calls.find((x) => x.status === 'rejected');
     if (!failed) return setLoadError('');
-    const code = failed.reason.response?.status;
+    const code = failed.reason.responmse?.status;
     setLoadError(code === 401 ? 'Sessiya tugagan. Qaytadan kiring.' : `Yuklashda xatolik: ${errMsg(failed.reason)}`);
   };
+  const fetchCompanies = async () => {
+    try {
+        const res = await axios.get('http://localhost:3000/api/companies', { headers });
+        setCompaniesList(res.data || []);
+    } catch (err) {
+        console.error("Kompaniyalarni yuklashda xatolik:", err);
+    }
+  };
+
+  const handleCompanyDelete = async (id) => {
+    if (window.confirm("Ushbu kompaniyani ro'yxatdan o'chirishni tasdiqlaysizmi?")) {
+      try {
+        await axios.delete(`http://localhost:3000/api/companies/${id}`, { headers });
+        alert("Kompaniya muvaffaqiyatli o'chirildi!");
+        fetchCompanies(); // Kompaniyalarni qayta yuklash
+        fetchDashboardData();
+      } catch (err) {
+        alert("O'chirishda Xatolik: " + err.response?.data || err.message);
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (token) {
+      fetchDashboardData();
+      fetchCompanies();
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (activeTab === 'companies') fetchCompanies();
+  } , [activeTab]);
+  
 
   useEffect(() => {
     if (token) fetchDashboardData();
@@ -257,33 +294,49 @@ const Dashboard = () => {
 
           {/* BANNER 3: KOMPANIYALAR */}
           {activeTab === 'companies' && (
-            <div className="table-wrapper-section">
-              <h3>🏢 Hamkor Kompaniyalar</h3>
-              <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-                Algoritm o‘quv markazi bilan hamkor kompaniyalar ro‘yxati.
-              </p>
-              <button className="csv-export-button" style={{ backgroundColor: '#2563eb' }} onClick={() => setIsCompanyModalOpen(true)}>
-                + Yangi Kompaniya Qo‘shish
-              </button>
-              <table className="dashboard-main-table" style={{ marginTop: '1rem' }}>
-                <thead>
-                  <tr><th>Nomi</th><th>Soha</th><th>Manzil</th><th>Aloqa</th><th>Holat</th></tr>
-                </thead>
-                <tbody>
-                  {companies.length === 0 ? (
-                    <tr><td colSpan="5" className="empty-row-msg">Kompaniyalar hali qo‘shilmagan.</td></tr>
-                  ) : (
-                    companies.map((c) => (
-                      <tr key={c.id}>
-                        <td>{c.name}</td><td>{c.field || '—'}</td><td>{c.address || '—'}</td>
-                        <td>{c.contact || '—'}</td><td>{c.status}</td>
-                      </tr>
+    <div className="table-wrapper-section">
+        <div className="section-title-bar">
+            <h3>🏢 Hamkor Kompaniyalar paneli</h3>
+            <button className="csv-export-button" style={{backgroundColor: '#2563eb'}} onClick={() => setIsCompanyModalOpen(true)}>+ Yangi Kompaniya Qo‘shish</button>
+        </div>
+        
+        {/* Yangi qo'shilgan jonli ro'yxat jadvali */}
+        <table className="dashboard-main-table" style={{marginTop: '1.5rem'}}>
+            <thead>
+                <tr>
+                    <th>Kompaniya Nomi</th>
+                    <th>Yo‘nalishi</th>
+                    <th>Manzil</th>
+                    <th>Aloqa</th>
+                    <th style={{textAlign: 'center'}}>Amal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {companiesList.length === 0 ? (
+                    <tr><td colSpan="5" className="empty-row-msg">Tizimda hamkor kompaniya mavjud emas.</td></tr>
+                ) : (
+                    companiesList.map((comp) => (
+                        <tr key={comp.id}>
+                            <td><strong>{comp.name}</strong></td>
+                            <td>{comp.field}</td>
+                            <td>{comp.address}</td>
+                            <td>{comp.contact}</td>
+                            <td style={{textAlign: 'center'}}>
+                                <button 
+                                    onClick={() => handleCompanyDelete(comp.id)}
+                                    style={{backgroundColor: '#ef4444', color: 'white', border: 'none', padding: '0.35rem 0.75rem', borderRadius: '4px', cursor: 'pointer', fontWeight: '600', fontSize: '0.8rem'}}
+                                >
+                                    O‘chirish
+                                </button>
+                            </td>
+                        </tr>
                     ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-          )}
+                )}
+            </tbody>
+        </table>
+    </div>
+)}
+
 
           {/* BANNER 4: MUAMMOLAR ARXIVI */}
           {activeTab === 'problems' && (
