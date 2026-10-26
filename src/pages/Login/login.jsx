@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Login.css';
+import './Login/login.css';
 
 const Login = ({ onLoginSuccess }) => {
     const [email, setEmail] = useState('coordinator@algoritm.uz');
