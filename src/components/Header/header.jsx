@@ -1,5 +1,5 @@
 import React from 'react';
-import './Header/header.css';
+import './Header.css';
 
 const Header = () => {
     const handleLogout = () => {

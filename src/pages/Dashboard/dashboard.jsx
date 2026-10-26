@@ -80,7 +80,7 @@ const Dashboard = () => {
     const calls = await Promise.allSettled([
       axios.get(`${API}/dashboard/coordinator`, { headers }),
       axios.get(`${API}/placements`, { headers, params: { limit: 25 } }),
-      axios.get(`${API}/action-items`, { headers, params: { limit: 25 } }),
+      axios.get(`${API}/weekly-report`, { headers, params: { limit: 25 } }),
       axios.get(`${API}/students`, { headers, params: { limit: 50 } }),
       axios.get(`${API}/companies`, { headers, params: { limit: 50 } }),
     ]); 
