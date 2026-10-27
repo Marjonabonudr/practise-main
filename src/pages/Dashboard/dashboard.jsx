@@ -5,13 +5,14 @@ import Sidebar from '../../components/Sidebar/sidebar';
 import ProblemCard from '../../components/ProblemCard/ProblemCard';
 import './dashboard.css';
 
-const API = 'https://practise-back.onrender.com/api';
+const API = 'https://practise-back.onrender.com/api-docs';
 
 
 
 // Backend xatosini o'qiladigan matnga aylantiradi (obyekt alert'da [object Object] bo'lib qolmasin)
 const errMsg = (err) => {
   const d = err.response?.data;
+  if(typeof d === 'string') return d;
   if (d?.details?.length) return d.details.map((x) => `${x.field}: ${x.message}`).join('\n');
   return d?.message || err.message;
 };
@@ -193,15 +194,29 @@ const Dashboard = () => {
     }
   };
 
-  // 4. YANGI O'QUVCHI (akkaunt keyin taklif havolasi orqali yaratiladi)
+  // 4. YANGI O'QUVCHI (akkaunt taklif havolasi orqali yaratiladi)
   const handleStudentSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
+
+    const cleanPhone = studentForm.phone.replace(/[^0-9+]/g, '');
+
+    // Backend talab qiladigan aniq kalit nomlari (full_name, email, phone, direction, group_name)
+    const payload = {
+      userId: "123e4567-e88b-12d3-a456-426614174000",
+      full_name: studentForm.full_name,
+      email: studentForm.email,
+      phone: cleanPhone,
+      direction: studentForm.direction,
+      group_name: studentForm.group_name,
+    };
+
     try {
-      await axios.post(`${API}/students`, { ...studentForm, group_name: studentForm.group_name || undefined }, { headers });
+      await axios.post(`${API}/students`, payload, { headers });
       alert('O‘quvchi muvaffaqiyatli saqlandi!');
       setIsStudentModalOpen(false);
       setStudentForm(emptyStudent);
+      fetchStudentsList(); // Ro'yxatni yangilash uchun
       fetchDashboardData();
     } catch (err) {
       alert('Xatolik: ' + errMsg(err));
