@@ -100,7 +100,7 @@ const Dashboard = () => {
   };
   const fetchCompanies = async () => {
     try {
-        const res = await axios.get('http://localhost:3000/api/companies', { headers });
+        const res = await axios.get(`${API}/companies`, { headers });
         setCompaniesList(res.data || []);
     } catch (err) {
         console.error("Kompaniyalarni yuklashda xatolik:", err);
@@ -110,7 +110,7 @@ const Dashboard = () => {
   const handleCompanyDelete = async (id) => {
     if (window.confirm("Ushbu kompaniyani ro'yxatdan o'chirishni tasdiqlaysizmi?")) {
       try {
-        await axios.delete(`http://localhost:3000/api/companies/${id}`, { headers });
+        await axios.delete(`${API}/companies/${id}`, { headers });
         alert("Kompaniya muvaffaqiyatli o'chirildi!");
         fetchCompanies(); // Kompaniyalarni qayta yuklash
         fetchDashboardData();
@@ -124,7 +124,7 @@ const Dashboard = () => {
     // 👥 1. Talabalarni bazadan yuklash funksiyasi
   const fetchStudents = async () => {
       try {
-          const res = await axios.get('http://localhost:3000/api/students', { headers });
+          const res = await axios.get(`${API}/students`, { headers });
           setStudentsList(res.data || []);
       } catch (err) {
           console.error("Talabalarni yuklashda xatolik:", err);
@@ -135,7 +135,7 @@ const Dashboard = () => {
   const handleStudentDelete = async (id) => {
       if (window.confirm("Ushbu o‘quvchi profilini o‘chirishni tasdiqlaysizmi?")) {
           try {
-              await axios.delete(`http://localhost:3000/api/students/${id}`, { headers });
+              await axios.delete(`${API}/students/${id}`, { headers });
               alert("O‘quvchi muvaffaqiyatli o‘chirildi!");
               fetchStudents(); // Ro'yxatni yangilash
               fetchDashboardData();
@@ -216,7 +216,7 @@ const Dashboard = () => {
       alert('O‘quvchi muvaffaqiyatli saqlandi!');
       setIsStudentModalOpen(false);
       setStudentForm(emptyStudent);
-      fetchStudentsList(); // Ro'yxatni yangilash uchun
+      fetchStudents(); // Ro'yxatni yangilash uchun
       fetchDashboardData();
     } catch (err) {
       alert('Xatolik: ' + errMsg(err));
