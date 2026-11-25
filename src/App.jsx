@@ -1,41 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import Login from './pages/Login/login'; // Kichik harfli fayl nomiga moslandi
-import Dashboard from './pages/Dashboard/dashboard'; // Kichik harfli fayl nomiga moslandi
+import React, { useState } from 'react';
+import Login from './pages/Login/login';
+import Dashboard from './pages/Dashboard/dashboard';
+import Register from './pages/Register/register';
+
+// Token ichidan rolni va muddatini xavfsiz o'qiydi (server baribir har so'rovda tekshiradi)
+const readToken = () => {
+  const token = localStorage.getItem('token');
+  if (!token) return null;
+  try {
+    const p = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+    if (p.exp && p.exp * 1000 < Date.now()) { localStorage.clear(); return null; }
+    return { role: p.role, id: p.id };
+  } catch { localStorage.clear(); return null; }
+};
 
 function App() {
-  // Tizimga kirganlik holati
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [auth, setAuth] = useState(readToken);
+  const params = new URLSearchParams(window.location.search);
 
-  useEffect(() => {
-    // Xotirada avvaldan kirilgan token borligini tekshirish
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  // Taklif havolasi: /register?token=...
+  if (window.location.pathname === '/register' && params.get('token')) {
+    return <Register token={params.get('token')} />;
+  }
+  const logout = () => { localStorage.clear(); setAuth(null); };
 
-  // Muvaffaqiyatli login bo'lganda Dashboard sahifasiga havola (link) o'tishi
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-  };
+  if (!auth) return <Login onLoginSuccess={() => setAuth(readToken())} />;
+  if (auth.role === 'coordinator') return <Dashboard onLogout={logout} />;
 
-  // Tizimdan chiqish havolasi
-  const handleLogout = () => {
-    localStorage.clear();
-    setIsLoggedIn(false);
-  };
-
+  // Mentor va amaliyotchi kabinetlari keyingi bosqichda (backend API'lari tayyor)
   return (
-    <div className="app-main-root">
-      {isLoggedIn ? (
-        // Kirilgan bo'lsa boshqaruv panelini ochish
-        <Dashboard onLogout={handleLogout} />
-      ) : (
-        // Kirilmagan bo'lsa login oynasini ochish
-        <Login onLoginSuccess={handleLoginSuccess} />
-      )}
+    <div style={{ padding: '3rem', textAlign: 'center' }}>
+      <h2>{auth.role === 'mentor' ? 'Mentor kabineti' : 'Amaliyotchi kabineti'}</h2>
+      <p>Bu kabinet ustida ish davom etmoqda.</p>
+      <button onClick={logout}>Chiqish</button>
     </div>
   );
 }
-
 export default App;

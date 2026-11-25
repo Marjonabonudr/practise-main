@@ -1,0 +1,14 @@
+login.jsx dagi submit funksiyasini shunga almashtiring (axios importi va qattiq yozilgan URL o'rniga):
+
+import api, { errMsg } from '../../api';
+...
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const { data } = await api.post('/users/login', { email, password });   // data = { token, role, id, email }
+    localStorage.setItem('token', data.token);
+    onLoginSuccess();
+  } catch (err) {
+    setError(errMsg(err));    // sizdagi xato ko'rsatish state'iga moslang
+  }
+};

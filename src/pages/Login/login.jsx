@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import './Login.css';
+import api, { errMsg } from '../../api';
+import './login.css';
 
 const Login = ({ onLoginSuccess }) => {
-    const [email, setEmail] = useState('coordinator@algoritm.uz');
-    const [password, setPassword] = useState('password123');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleLogin = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
+        setLoading(true);
         try {
-            const res = await axios.post('http://localhost:3000/api/users/login', { email, password });
-            localStorage.setItem('token', res.data.token);
-            localStorage.setItem('role', res.data.role);
+            const { data } = await api.post('/users/login', { email, password }); // data = { token, role, id, email }
+            localStorage.setItem('token', data.token);
             onLoginSuccess();
         } catch (err) {
-            alert(err.response?.data || 'Email yoki parol xato!');
+            setError(errMsg(err));
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="login-container">
-            <form className="login-form" onSubmit={handleLogin}>
+            <form className="login-form" onSubmit={handleSubmit}>
                 <h2>Algoritm Monitoring</h2>
                 <div className="form-group">
                     <label>Email</label>
@@ -30,7 +35,10 @@ const Login = ({ onLoginSuccess }) => {
                     <label>Parol</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
-                <button type="submit" className="login-btn">Kirish</button>
+                {error && <div style={{ color: '#b91c1c', marginBottom: '0.75rem' }}>{error}</div>}
+                <button type="submit" className="login-btn" disabled={loading}>
+                    {loading ? 'Kirilmoqda...' : 'Kirish'}
+                </button>
             </form>
         </div>
     );
