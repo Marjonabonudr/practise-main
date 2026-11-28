@@ -6,15 +6,13 @@ import Drawer from '../Sidebar/Drawer';
 const Header = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
-  // Theme toggle – reads/writes from localStorage
+  // Theme toggle – localStorage’da saqlash
   const toggleTheme = () => {
-    const current = document.documentElement.getAttribute('data-theme') || 'light';
-    const next = current === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+    const cur = document.documentElement.getAttribute('data-theme') || 'light';
+    const nxt = cur === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', nxt);
+    localStorage.setItem('theme', nxt);
   };
-
-  // Initialise theme on mount
   useEffect(() => {
     const saved = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', saved);
@@ -22,9 +20,8 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.reload(); // Sahifani yangilab Login holatiga qaytaradi
+    window.location.reload();
   };
-
   const openDrawer = () => setDrawerOpen(true);
   const closeDrawer = () => setDrawerOpen(false);
 
@@ -33,7 +30,6 @@ const Header = () => {
       <button className="hamburger" onClick={openDrawer}>☰</button>
       <div className="header-logo">Algoritm Amaliyot Monitoringi</div>
       <Button variant="primary" onClick={handleLogout}>Chiqish</Button>
-      {/* Theme toggle */}
       <Button variant="primary" onClick={toggleTheme}>Mavzu</Button>
       <Drawer isOpen={isDrawerOpen} onClose={closeDrawer} />
     </header>
