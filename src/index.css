@@ -1,6 +1,25 @@
 @import "./styles/tokens.css";
 
-:root {
+/* Import design tokens */
+@import "./styles/tokens.css";
+
+/* Base layout */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: var(--font-body);
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+/* Ensure full‑width flex container */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
   font-family: var(--font-body);
   line-height: 1.5;
   font-weight: 400;
