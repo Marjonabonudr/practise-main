@@ -1,0 +1,414 @@
+/* =========================================================
+   Boshqaruv elementlari: tugmalar, maydonlar, pill'lar
+   ========================================================= */
+
+/* ---------------- Tugmalar ---------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  border: 1px solid var(--ink);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform var(--t-fast), box-shadow var(--t-fast), background-color var(--t-fast),
+    color var(--t-fast), border-color var(--t-fast);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-hard);
+}
+
+.btn:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: none;
+  transform: none;
+}
+
+.btn--primary {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--ink-2);
+}
+
+.btn--accent {
+  background: var(--accent);
+  color: var(--white);
+  border-color: var(--ink);
+}
+
+.btn--accent:hover:not(:disabled) {
+  background: var(--accent-ink);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  color: var(--ink-3);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: rgba(22, 24, 28, 0.055);
+  box-shadow: none;
+  transform: none;
+  color: var(--ink);
+}
+
+.btn--outline {
+  background: transparent;
+  box-shadow: none;
+  border-color: var(--line-2);
+}
+
+.btn--outline:hover:not(:disabled) {
+  border-color: var(--ink);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+.btn--danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+  border-color: var(--danger);
+  box-shadow: none;
+}
+
+.btn--danger:hover:not(:disabled) {
+  background: var(--danger);
+  color: var(--white);
+  box-shadow: none;
+  transform: none;
+}
+
+.btn--sm {
+  height: 30px;
+  padding: 0 11px;
+  font-size: 12.5px;
+}
+
+.btn--xs {
+  height: 26px;
+  padding: 0 9px;
+  font-size: 11.5px;
+  gap: 5px;
+}
+
+.btn--lg {
+  height: 46px;
+  padding: 0 22px;
+  font-size: 15px;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* ---------------- Maydonlar ---------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.field__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+}
+
+.field__req {
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+.field__hint {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.field__error {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--danger);
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 12px;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-sm);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), background-color var(--t-fast);
+  outline: none;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--muted-2);
+}
+
+.input:hover:not(:disabled),
+.textarea:hover:not(:disabled),
+.select:hover:not(:disabled) {
+  border-color: var(--muted-2);
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(217, 72, 42, 0.16);
+  background: var(--white);
+}
+
+.input:disabled,
+.textarea:disabled,
+.select:disabled {
+  background: var(--paper-2);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.input--invalid,
+.textarea--invalid,
+.select--invalid {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 3px rgba(180, 35, 24, 0.12);
+}
+
+.textarea {
+  min-height: 92px;
+  resize: vertical;
+  line-height: 1.55;
+}
+
+.select {
+  appearance: none;
+  padding-right: 34px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4.2 6 8l4-3.8' fill='none' stroke='%232b2f36' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  cursor: pointer;
+}
+
+.select--sm,
+.input--sm {
+  min-height: 34px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+.select--sm {
+  padding-right: 30px;
+  background-position: right 10px center;
+}
+
+/* Ikonkali maydon */
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrap__icon {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  color: var(--muted-2);
+  pointer-events: none;
+  transition: color var(--t-fast);
+}
+
+.input-wrap__icon--right {
+  left: auto;
+  right: 10px;
+  pointer-events: auto;
+}
+
+.input-wrap:focus-within .input-wrap__icon {
+  color: var(--ink);
+}
+
+.input-wrap .input {
+  padding-left: 38px;
+}
+
+.input-wrap--right .input {
+  padding-left: 12px;
+  padding-right: 40px;
+}
+
+.input-wrap__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: var(--r-xs);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color var(--t-fast), background-color var(--t-fast);
+}
+
+.input-wrap__btn:hover {
+  color: var(--ink);
+  background: rgba(22, 24, 28, 0.06);
+}
+
+/* Checkbox / radio */
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.check input {
+  appearance: none;
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-xs);
+  background: var(--white);
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  transition: all var(--t-fast);
+}
+
+.check input::after {
+  content: '';
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid var(--white);
+  border-bottom: 2px solid var(--white);
+  transform: rotate(-45deg) scale(0);
+  transition: transform var(--t-fast);
+  margin-top: -2px;
+}
+
+.check input:checked {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.check input:checked::after {
+  transform: rotate(-45deg) scale(1);
+}
+
+/* ---------------- Pill / Badge ---------------- */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--r-pill);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+.pill--dot::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.pill--placed {
+  background: var(--st-placed-bg);
+  color: var(--st-placed-fg);
+}
+.pill--ongoing {
+  background: var(--st-ongoing-bg);
+  color: var(--st-ongoing-fg);
+}
+.pill--paused {
+  background: var(--st-paused-bg);
+  color: var(--st-paused-fg);
+}
+.pill--terminated {
+  background: var(--st-terminated-bg);
+  color: var(--st-terminated-fg);
+}
+.pill--completed {
+  background: var(--st-completed-bg);
+  color: var(--st-completed-fg);
+}
+.pill--open {
+  background: var(--danger-soft);
+  color: #8a2018;
+}
+.pill--progress {
+  background: var(--amber-soft);
+  color: #7c5305;
+}
+.pill--resolved {
+  background: var(--ok-soft);
+  color: #215430;
+}
+.pill--neutral {
+  background: var(--paper-2);
+  color: var(--ink-3);
+}
+.pill--accent {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+.pill--outline {
+  border-color: var(--line-2);
+  color: var(--ink-3);
+  background: transparent;
+}

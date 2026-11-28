@@ -1,0 +1,9 @@
+{
+  "welcome": "Welcome!",
+  "logout": "Logout",
+  "dashboard": "Dashboard",
+  "students": "Students",
+  "companies": "Companies",
+  "problems": "Problems",
+  "themeToggle": "Toggle Theme"
+}

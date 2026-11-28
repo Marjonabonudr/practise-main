@@ -1,0 +1,101 @@
+/* =========================================================
+   AMALIYOT — dizayn tokenlari
+   Uslub: "Ink & Paper" — issiq qog'oz fon, siyoh qora,
+   vermilion aksent, serif sarlavhalar, mono raqamlar.
+   Internova (ko'k gradient + katta yumaloq kartalar) dan
+   ataylab farqli: tekis fon, qattiq soya, kichik radius.
+   ========================================================= */
+
+:root {
+  color-scheme: light;
+
+  /* Primary color for buttons and special UI parts */
+  --color-primary: #062557;
+
+  --paper: #E9E9F0;
+  --paper-2: #ece5d7;
+  --paper-3: #e2d9c7;
+  --white: #fffdf8;
+  --surface: #fffdf8
+  ;
+
+  /* --- Siyoh (ink) --- */
+  --ink: #16181c;
+  --ink-2: #2b2f36;
+  --ink-3: #4a4f58;
+  --muted: #6d6b63;
+  --muted-2: #8a877d;
+
+  /* --- Chiziqlar --- */
+  --line: #ddd4c3;
+  --line-2: #cabfa9;
+
+  /* --- Aksentlar (primary) --- */
+  --accent: var(--color-primary);
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(6, 37, 87, 0.1);
+  --accent-tint: #041c3b;
+
+  --accent: #d9482a;
+  --accent-ink: #8d2812;
+  --accent-soft: #f8dcd2;
+  --accent-tint: #fdf1ec;
+
+  --teal: #1e6b5c;
+  --teal-soft: #d7e8e2;
+  --teal-tint: #eef6f3;
+
+  --amber: #a9740f;
+  --amber-soft: #f7e7c2;
+  --amber-tint: #fdf6e6;
+
+  --ok: #2f6b3f;
+  --ok-soft: #d9e9dc;
+  --danger: #b42318;
+  --danger-soft: #fbe0dc;
+  --info: #2b4d7a;
+  --info-soft: #dde7f4;
+
+  /* --- Radius --- */
+  --r-xs: 3px;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  /* --- Soyalar (qattiq, "bosma" uslubi) --- */
+  --shadow-hard: 3px 3px 0 var(--ink);
+  --shadow-hard-sm: 2px 2px 0 var(--ink);
+  --shadow-soft: 0 1px 2px rgba(22, 24, 28, 0.07);
+  --shadow-lift: 0 10px 30px -12px rgba(22, 24, 28, 0.28);
+
+  /* --- Shrift --- */
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* --- O'lchamlar --- */
+  --sidebar-w: 264px;
+  --topbar-h: 68px;
+  --page-max: 1560px;
+  --gap: 20px;
+  --gap-sm: 12px;
+  --gap-lg: 28px;
+
+  /* --- O'tishlar --- */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --t-fast: 120ms var(--ease);
+  --t-mid: 220ms var(--ease);
+
+  /* --- Holat ranglari (amaliyot statusi) --- */
+  --st-placed-bg: var(--info-soft);
+  --st-placed-fg: #1f3d63;
+  --st-ongoing-bg: var(--ok-soft);
+  --st-ongoing-fg: #215430;
+  --st-paused-bg: var(--amber-soft);
+  --st-paused-fg: #7c5305;
+  --st-terminated-bg: var(--danger-soft);
+  --st-terminated-fg: #892018;
+  --st-completed-bg: #e6e2d8;
+  --st-completed-fg: #4a4740;
+}
